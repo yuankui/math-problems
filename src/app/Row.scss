@@ -1,0 +1,11 @@
+div.row {
+    display: flex;
+    flex-direction: row;
+
+    div {
+        padding: 10px;
+        border: 2px solid black;
+        width: 100px;
+        margin: -1px;
+    }
+}

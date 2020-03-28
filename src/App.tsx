@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import './App.scss';
+import {range} from 'rxjs';
+import {map, toArray, bufferCount} from 'rxjs/operators'
+import Row from "./app/Row";
+
+export interface Quiz {
+    num1: number,
+    operator: string,
+    num2: number,
+}
+
+const randomInt = (max: number) => {
+    const num = parseInt(String(Math.random() * max));
+    return num;
+};
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [problems, setProblems] = useState<Array<Array<Quiz>>>([]);
+
+    useEffect(() => {
+        range(0, 100)
+            .pipe(
+                map(() => {
+                    const num1 = randomInt(100);
+                    const operator = randomInt(100) % 2 === 0 ? '+' : '-';
+                    const num2 = randomInt(100);
+
+                    if (operator === '-') {
+                        return {
+                            num1: Math.max(num1, num2),
+                            operator: '-',
+                            num2: Math.min(num2, num1),
+                        }
+                    }
+                    const q: Quiz = {
+                        num1,
+                        operator,
+                        num2,
+                    };
+                    return q;
+                }),
+                bufferCount(10),
+                toArray(),
+                // windowCount(100),
+            )
+            .subscribe(value => {
+                setProblems(value);
+            })
+
+    }, []);
+
+    const cube = problems.map(row => {
+        return <Row problems={row}/>
+    });
+    return (
+        <div>{cube}</div>
+    );
 }
 
 export default App;
