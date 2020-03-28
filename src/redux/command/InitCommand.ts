@@ -1,6 +1,6 @@
 import {AppCommand} from "./AppCommand";
 import {AppStore} from "../AppStore";
-import {InitStrategyCommand} from "./InitStrategyCommand";
+import {InitStrategyCommand} from "./math/InitStrategyCommand";
 import {Dispatch} from "redux";
 
 export class InitCommand extends AppCommand {
