@@ -9,7 +9,7 @@ interface Props {
     onChange: Consumer<Strategy>,
 }
 
-const StrategyView: FunctionComponent<Props> = (props) => {
+const StrategyEditor: FunctionComponent<Props> = (props) => {
     const {max, operator, levelUp, space} = props.value;
 
     const checkSpace = (value?: 0 | 1 |2) => (e: any) => {
@@ -26,6 +26,7 @@ const StrategyView: FunctionComponent<Props> = (props) => {
             return 0;
         }
     };
+
     return <div className='form'>
         <div>
             <FieldLabel title={"数值范围"}>
@@ -181,4 +182,4 @@ const StrategyView: FunctionComponent<Props> = (props) => {
     </div>;
 };
 
-export default StrategyView;
+export default StrategyEditor;

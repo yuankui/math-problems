@@ -3,7 +3,7 @@ import './App.scss';
 import {range} from 'rxjs';
 import {map, toArray, bufferCount, catchError} from 'rxjs/operators'
 import QuizView from "./app/QuizView";
-import StrategyView from "./strategy/StrategyView";
+import StrategyEditor from "./strategy/StrategyEditor";
 import {Strategy} from "./strategy/Strategy";
 import {generateQuiz} from "./strategy/quizGenerator";
 
@@ -49,7 +49,7 @@ function App() {
 
     return (
         <div>
-            <StrategyView value={strategy} onChange={setStrategy}/>
+            <StrategyEditor value={strategy} onChange={setStrategy}/>
             {cube}
         </div>
     );
