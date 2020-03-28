@@ -1,8 +1,9 @@
 import React, {FunctionComponent} from 'react';
 import {Strategy} from "./Strategy";
 import {Consumer} from "../common";
-import {FormControlLabel, Radio, TextField} from "@material-ui/core";
+import {FormControlLabel, Radio, Slider, TextField} from "@material-ui/core";
 import FieldLabel from "./FieldLabel";
+import {lazyExecute} from "../common/lazyExecute";
 
 interface Props {
     value: Strategy,
@@ -10,7 +11,7 @@ interface Props {
 }
 
 const StrategyEditor: FunctionComponent<Props> = (props) => {
-    const {max, operator, levelUp, space} = props.value;
+    const {max, operator, levelUp, space, quizLine} = props.value;
 
     const checkSpace = (value?: 0 | 1 |2) => (e: any) => {
         props.onChange({
@@ -26,6 +27,13 @@ const StrategyEditor: FunctionComponent<Props> = (props) => {
             return 0;
         }
     };
+
+    const lazySaveLine = lazyExecute((value: number) => {
+        props.onChange({
+            ...props.value,
+            quizLine: value as number,
+        })
+    }, 200);
 
     return <div className='form'>
         <div>
@@ -81,8 +89,6 @@ const StrategyEditor: FunctionComponent<Props> = (props) => {
                         }}
                         color="secondary"
                     />} label={"减法"}/>
-
-
                 </div>
             </FieldLabel>
         </div>
@@ -177,6 +183,20 @@ const StrategyEditor: FunctionComponent<Props> = (props) => {
 
 
                 </div>
+            </FieldLabel>
+        </div>
+        <div>
+            <FieldLabel title={"题目行数"}>
+                <Slider valueLabelDisplay="auto"
+                        aria-label="题目行数"
+                        onChange={(event, value) => {
+                            lazySaveLine(value as number);
+                        }}
+                        step={1}
+                        min={1}
+                        max={20}
+                        defaultValue={quizLine} />
+
             </FieldLabel>
         </div>
     </div>;
