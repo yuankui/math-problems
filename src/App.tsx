@@ -3,6 +3,8 @@ import './App.scss';
 import {range} from 'rxjs';
 import {map, toArray, bufferCount} from 'rxjs/operators'
 import Row from "./app/Row";
+import StrategyView from "./strategy/StrategyView";
+import {Strategy} from "./strategy/Strategy";
 
 export interface Quiz {
     num1: number,
@@ -50,11 +52,27 @@ function App() {
 
     }, []);
 
-    const cube = problems.map(row => {
-        return <Row problems={row}/>
+    const cube = problems.map((row,i) => {
+        return <Row key={i} problems={row}/>
     });
+
+    const defSt : Strategy = {
+        levelUp: true,
+        space: "first",
+        append: {
+            plus: true,
+            minus: false,
+        },
+        max: 100,
+        min: 10,
+    };
+
+    const [strategy, setStrategy] = useState(defSt);
     return (
-        <div>{cube}</div>
+        <div>
+            <StrategyView value={strategy} onChange={setStrategy}/>
+            {cube}
+        </div>
     );
 }
 

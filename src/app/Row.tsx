@@ -6,8 +6,8 @@ interface Props {
 }
 
 const Row: FunctionComponent<Props> = (props) => {
-    const ps = props.problems.map(p => {
-        return <div>
+    const ps = props.problems.map((p, i) => {
+        return <div key={i}>
             <div>{p.num1}</div>
             <div className='operator'>{p.operator}</div>
             <div>{p.num2}</div>
