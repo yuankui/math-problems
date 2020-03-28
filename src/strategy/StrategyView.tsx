@@ -1,9 +1,10 @@
 import React, {CSSProperties, FunctionComponent, useState} from 'react';
-import {Button} from "@material-ui/core";
+import {Button, Fab} from "@material-ui/core";
 import StrategyEditor from "./StrategyEditor";
 import {Strategy} from "./Strategy";
 import {Value} from "../common";
-
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import EditRoundedIcon from '@material-ui/icons/EditRounded';
 interface Props extends Value<Strategy> {
 }
 
@@ -33,12 +34,10 @@ const StrategyView: FunctionComponent<Props> = (props) => {
     const showText = `【${props.value.max}】以内【${plusMinus}】`;
     return <div className='strategy-view'>
         <div className='action-btn'>
-            <Button variant="contained"
-                    style={visible(!editMode)}
-                    color="secondary"
-                    onClick={event => {
-                        setEditMode(true);
-                    }}>编辑</Button>
+            <Fab color="primary" size='small' style={visible(!editMode)} aria-label="edit" onClick={() => setEditMode(true)}>
+                <EditRoundedIcon/>
+            </Fab>
+            
             <Button variant="contained"
                     style={visible(editMode)}
                     onClick={e => {
