@@ -1,7 +1,7 @@
 import {AppCommand} from "./AppCommand";
 import {AppStore} from "../AppStore";
 import {Dispatch} from "redux";
-import {UpdateStrategyCommand} from "./math/UpdateStrategyCommand";
+import {UpdateMathCommand} from "./math/UpdateMathCommand";
 
 export class InitCommand extends AppCommand {
     name(): string {
@@ -9,11 +9,14 @@ export class InitCommand extends AppCommand {
     }
 
     async process(state: AppStore, dispatch: Dispatch): Promise<any> {
-        dispatch(new UpdateStrategyCommand({
-            levelUp: true,
-            space: 2,
-            operator: "+",
-            max: 100,
+        dispatch(new UpdateMathCommand({
+            strategy: {
+                levelUp: true,
+                space: 2,
+                operator: "+",
+                max: 100,
+                quizLine: 10,
+            },
         }));
     }
 

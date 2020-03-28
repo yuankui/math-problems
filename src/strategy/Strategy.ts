@@ -5,4 +5,6 @@ export interface Strategy {
     levelUp?: boolean,
 
     space?: 0 | 1 | 2,
+
+    quizLine: number,
 }

@@ -16,15 +16,15 @@ export interface Quiz {
     num3?: number,
 }
 
-
 function App() {
     const [problems, setProblems] = useState<Array<Array<Quiz>>>([]);
     let dispatch = useDispatch();
 
-    const strategy = useAppStore()?.math?.strategy;
+    const {strategy} = useAppStore()?.math;
 
+    const columns = 7;
     useEffect(() => {
-        range(0, 100)
+        range(0, strategy.quizLine * columns)
             .pipe(
                 map(() => {
                     return generateQuiz(strategy)
