@@ -40,7 +40,7 @@ function App() {
                     };
                     return q;
                 }),
-                bufferCount(10),
+                bufferCount(7),
                 toArray(),
                 // windowCount(100),
             )
