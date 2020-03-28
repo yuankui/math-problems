@@ -29,7 +29,7 @@ export function generateQuiz(strategy: Strategy): Quiz {
             row = [c, b, a];
         }
 
-        let spacePosition = strategy.space === undefined ? randomInt(4) : strategy.space;
+        let spacePosition = strategy.space === undefined ? randomInt(3) : strategy.space;
 
         row[spacePosition] = null;
 
