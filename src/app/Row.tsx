@@ -7,7 +7,13 @@ interface Props {
 
 const Row: FunctionComponent<Props> = (props) => {
     const ps = props.problems.map(p => {
-        return <div>{p.num1} {p.operator} {p.num2} = __</div>;
+        return <div>
+            <div>{p.num1}</div>
+            <div className='operator'>{p.operator}</div>
+            <div>{p.num2}</div>
+            <div className='eq'> = </div>
+            <div> ___</div>
+        </div>;
     });
     return <div className='row'>
         {ps}
