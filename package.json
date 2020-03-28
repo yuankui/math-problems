@@ -13,6 +13,7 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.7",
+    "@types/uuid": "^7.0.2",
     "lodash": "^4.17.15",
     "mitt": "^1.2.0",
     "node-sass": "^4.13.1",
@@ -25,7 +26,8 @@
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.5.4",
     "scss": "^0.2.4",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "uuid": "^7.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
