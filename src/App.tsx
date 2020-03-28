@@ -12,12 +12,17 @@ export interface Quiz {
 }
 
 function App() {
-    const [sections, setSections] = useState<Array<ReactNode>>([]);
-    const addSection = () => {
+    const newSection = () => {
         let id = uuid();
+        return <Section key={id}/>;
+    };
+
+    const [sections, setSections] = useState<Array<ReactNode>>([newSection()]);
+
+    const addSection = () => {
         setSections([
             ...sections,
-            <Section key={id}/>
+            newSection(),
         ]);
     };
 

@@ -39,17 +39,18 @@ const StrategyEditor: FunctionComponent<Props> = (props) => {
         <div>
             <FieldLabel title={"数值范围"}>
                 <div>
-                    <TextField id="outlined-basic"
-                               label="最大值"
-                               variant="outlined"
-                               onChange={e => {
-                                   let v = toInt(e.target.value);
-                                   props.onChange({
-                                       ...props.value,
-                                       max: v,
-                                   })
-                               }}
-                               value={max}/>
+                    <Slider valueLabelDisplay="auto"
+                            aria-label="最大值"
+                            onChange={(event, value) => {
+                                props.onChange({
+                                    ...props.value,
+                                    max: value as number,
+                                })
+                            }}
+                            step={5}
+                            min={10}
+                            max={200}
+                            defaultValue={max} />
                 </div>
             </FieldLabel>
         </div>
