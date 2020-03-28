@@ -2,7 +2,7 @@ import {AppCommand} from "../AppCommand";
 import {AppStore, MathStore} from "../../AppStore";
 import {Dispatch} from "redux";
 
-export class InitMathCommand extends AppCommand {
+export class UpdateMathCommand extends AppCommand {
     math: Partial<MathStore>;
 
     constructor(math: Partial<MathStore>) {

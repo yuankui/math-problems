@@ -3,9 +3,11 @@ import './App.scss';
 import {range} from 'rxjs';
 import {bufferCount, catchError, map, toArray} from 'rxjs/operators'
 import QuizView from "./app/QuizView";
-import {Strategy} from "./strategy/Strategy";
 import {generateQuiz} from "./strategy/quizGenerator";
 import StrategyView from "./strategy/StrategyView";
+import {useDispatch} from "react-redux";
+import {UpdateStrategyCommand} from "./redux/command/math/UpdateStrategyCommand";
+import {useAppStore} from "./redux/AppStore";
 
 export interface Quiz {
     num1?: number,
@@ -17,13 +19,9 @@ export interface Quiz {
 
 function App() {
     const [problems, setProblems] = useState<Array<Array<Quiz>>>([]);
-    const defSt : Strategy = {
-        levelUp: true,
-        space: 2,
-        operator: "+",
-        max: 100,
-    };
-    const [strategy, setStrategy] = useState(defSt);
+    let dispatch = useDispatch();
+
+    const strategy = useAppStore()?.math?.strategy;
 
     useEffect(() => {
         range(0, 100)
@@ -49,7 +47,9 @@ function App() {
 
     return (
         <div>
-            <StrategyView value={strategy} onChange={setStrategy}/>
+            <StrategyView value={strategy} onChange={value => {
+                dispatch(new UpdateStrategyCommand(value));
+            }}/>
             {cube}
         </div>
     );
