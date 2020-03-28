@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {Strategy} from "./Strategy";
 import {Consumer} from "../common";
-import {Checkbox, FormControlLabel, Radio, TextField} from "@material-ui/core";
+import {FormControlLabel, Radio, TextField} from "@material-ui/core";
 import FieldLabel from "./FieldLabel";
 
 interface Props {
@@ -10,9 +10,9 @@ interface Props {
 }
 
 const StrategyView: FunctionComponent<Props> = (props) => {
-    const {min, max, append, levelUp, space} = props.value;
+    const {min, max, operator, levelUp, space} = props.value;
 
-    const checkSpace = (value: "first" |"second" |"third") => (e: any) => {
+    const checkSpace = (value: 0 | 1 |2) => (e: any) => {
         props.onChange({
             ...props.value,
             space: value,
@@ -65,33 +65,38 @@ const StrategyView: FunctionComponent<Props> = (props) => {
         <div>
             <FieldLabel title={"加减法"}>
                 <div>
-                    <FormControlLabel control={<Checkbox
-                        checked={append.plus}
+                    <FormControlLabel control={<Radio
+                        checked={operator === '+'}
                         onChange={(event, checked) => {
                             props.onChange({
                                 ...props.value,
-                                append: {
-                                    ...append,
-                                    plus: checked,
-                                }
+                                operator: "+"
                             })
                         }}
                         color="primary"
                     />} label={"加法"}/>
 
-                    <FormControlLabel control={<Checkbox
-                        checked={append.minus}
+                    <FormControlLabel control={<Radio
+                        checked={operator === '-'}
                         onChange={(event, checked) => {
                             props.onChange({
                                 ...props.value,
-                                append: {
-                                    ...append,
-                                    minus: checked,
-                                }
+                                operator: "-"
                             })
                         }}
                         color="secondary"
                     />} label={"减法"}/>
+
+                    <FormControlLabel control={<Radio
+                        checked={operator === 'random'}
+                        onChange={(event, checked) => {
+                            props.onChange({
+                                ...props.value,
+                                operator: "random"
+                            })
+                        }}
+                        color="default"
+                    />} label={"随机"}/>
 
                 </div>
             </FieldLabel>
@@ -100,8 +105,8 @@ const StrategyView: FunctionComponent<Props> = (props) => {
             <FieldLabel title={"空格位置"}>
                 <div>
                     <FormControlLabel control={<Radio
-                        checked={space === 'first'}
-                        onChange={checkSpace("first")}
+                        checked={space === 0}
+                        onChange={checkSpace(0)}
                         value="第一"
                         color="primary"
                         name="radio-button-demo"
@@ -109,8 +114,8 @@ const StrategyView: FunctionComponent<Props> = (props) => {
                     />} label={"左边"}/>
 
                     <FormControlLabel control={<Radio
-                        checked={space === 'second'}
-                        onChange={checkSpace("second")}
+                        checked={space === 1}
+                        onChange={checkSpace(1)}
                         value="第二"
                         color="secondary"
                         name="radio-button-demo"
@@ -118,8 +123,8 @@ const StrategyView: FunctionComponent<Props> = (props) => {
                     />} label={"中间"}/>
 
                     <FormControlLabel control={<Radio
-                        checked={space === 'third'}
-                        onChange={checkSpace("third")}
+                        checked={space === 2}
+                        onChange={checkSpace(2)}
                         value="第三"
                         color="default"
                         name="radio-button-demo"

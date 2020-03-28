@@ -2,11 +2,8 @@ export interface Strategy {
     max: number,
     min: number,
 
-    append: {
-        plus: boolean,
-        minus: boolean,
-    };
+    operator: "+" | "-" | "random";
     levelUp?: boolean,
 
-    space: "first" | "second" | "third",
+    space: 0 | 1 | 2,
 }
