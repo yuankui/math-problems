@@ -12,7 +12,7 @@ const Row: FunctionComponent<Props> = (props) => {
             <div className='operator'>{p.operator}</div>
             <div>{p.num2}</div>
             <div className='eq'> = </div>
-            <div> ___</div>
+            <div> <div className='space-box'/></div>
         </div>;
     });
     return <div className='row'>
