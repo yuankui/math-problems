@@ -18,6 +18,19 @@ const visible = (v: boolean): CSSProperties => {
 const StrategyView: FunctionComponent<Props> = (props) => {
     const [editMode, setEditMode] = useState(false);
 
+    let plusMinus;
+    switch (props.value.operator) {
+        case "+":
+            plusMinus = "加法";
+            break;
+        case "-":
+            plusMinus = '减法';
+            break;
+        default:
+            plusMinus = '加减法';
+    }
+
+    const showText = `【${props.value.max}】以内【${plusMinus}】`;
     return <div className='strategy-view'>
         <div className='action-btn'>
             <Button variant="contained"
@@ -36,9 +49,9 @@ const StrategyView: FunctionComponent<Props> = (props) => {
         <div style={visible(editMode)}>
             <StrategyEditor value={props.value} onChange={props.onChange}/>
         </div>
-        <div style={visible(!editMode)}>
-            {JSON.stringify(props.value)}
-        </div>
+        <h2 style={visible(!editMode)}>
+            {showText}
+        </h2>
 
     </div>;
 };
