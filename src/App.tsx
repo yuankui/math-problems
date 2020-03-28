@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import './App.scss';
 import {range} from 'rxjs';
-import {map, toArray, bufferCount, catchError} from 'rxjs/operators'
+import {bufferCount, catchError, map, toArray} from 'rxjs/operators'
 import QuizView from "./app/QuizView";
-import StrategyEditor from "./strategy/StrategyEditor";
 import {Strategy} from "./strategy/Strategy";
 import {generateQuiz} from "./strategy/quizGenerator";
+import StrategyView from "./strategy/StrategyView";
 
 export interface Quiz {
     num1?: number,
@@ -49,7 +49,7 @@ function App() {
 
     return (
         <div>
-            <StrategyEditor value={strategy} onChange={setStrategy}/>
+            <StrategyView value={strategy} onChange={setStrategy}/>
             {cube}
         </div>
     );

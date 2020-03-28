@@ -1,0 +1,14 @@
+.strategy-view {
+
+    .action-btn {
+        visibility: hidden;
+
+        .strategy-view:hover & {
+            display: flex;
+        }
+    }
+
+    &:hover .action-btn {
+        visibility: visible;
+    }
+}
