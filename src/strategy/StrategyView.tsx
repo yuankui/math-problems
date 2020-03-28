@@ -10,9 +10,9 @@ interface Props {
 }
 
 const StrategyView: FunctionComponent<Props> = (props) => {
-    const {min, max, operator, levelUp, space} = props.value;
+    const {max, operator, levelUp, space} = props.value;
 
-    const checkSpace = (value: 0 | 1 |2) => (e: any) => {
+    const checkSpace = (value?: 0 | 1 |2) => (e: any) => {
         props.onChange({
             ...props.value,
             space: value,
@@ -31,27 +31,10 @@ const StrategyView: FunctionComponent<Props> = (props) => {
             <FieldLabel title={"数值范围"}>
                 <div>
                     <TextField id="outlined-basic"
-                               label="最小"
-                               variant="outlined"
-                               onChange={e => {
-                                   let v = toInt(e.target.value);
-                                   if (v > max) {
-                                       v = max;
-                                   }
-                                   props.onChange({
-                                       ...props.value,
-                                       min: v,
-                                   })
-                               }}
-                               value={min}/>
-                    <TextField id="outlined-basic"
                                label="最大值"
                                variant="outlined"
                                onChange={e => {
                                    let v = toInt(e.target.value);
-                                   if (v < min) {
-                                       v = min;
-                                   }
                                    props.onChange({
                                        ...props.value,
                                        max: v,
@@ -65,6 +48,17 @@ const StrategyView: FunctionComponent<Props> = (props) => {
         <div>
             <FieldLabel title={"加减法"}>
                 <div>
+                    <FormControlLabel control={<Radio
+                        checked={operator === undefined}
+                        onChange={(event, checked) => {
+                            props.onChange({
+                                ...props.value,
+                                operator: undefined
+                            })
+                        }}
+                        color="default"
+                    />} label={"随机"}/>
+
                     <FormControlLabel control={<Radio
                         checked={operator === '+'}
                         onChange={(event, checked) => {
@@ -87,16 +81,6 @@ const StrategyView: FunctionComponent<Props> = (props) => {
                         color="secondary"
                     />} label={"减法"}/>
 
-                    <FormControlLabel control={<Radio
-                        checked={operator === 'random'}
-                        onChange={(event, checked) => {
-                            props.onChange({
-                                ...props.value,
-                                operator: "random"
-                            })
-                        }}
-                        color="default"
-                    />} label={"随机"}/>
 
                 </div>
             </FieldLabel>
@@ -105,9 +89,15 @@ const StrategyView: FunctionComponent<Props> = (props) => {
             <FieldLabel title={"空格位置"}>
                 <div>
                     <FormControlLabel control={<Radio
+                        checked={space === undefined}
+                        onChange={checkSpace(undefined)}
+                        color="default"
+                        name="radio-button-demo"
+                        inputProps={{'aria-label': 'A'}}
+                    />} label={"随机"}/>
+                    <FormControlLabel control={<Radio
                         checked={space === 0}
                         onChange={checkSpace(0)}
-                        value="第一"
                         color="primary"
                         name="radio-button-demo"
                         inputProps={{'aria-label': 'A'}}
@@ -116,7 +106,6 @@ const StrategyView: FunctionComponent<Props> = (props) => {
                     <FormControlLabel control={<Radio
                         checked={space === 1}
                         onChange={checkSpace(1)}
-                        value="第二"
                         color="secondary"
                         name="radio-button-demo"
                         inputProps={{'aria-label': 'A'}}
@@ -125,17 +114,34 @@ const StrategyView: FunctionComponent<Props> = (props) => {
                     <FormControlLabel control={<Radio
                         checked={space === 2}
                         onChange={checkSpace(2)}
-                        value="第三"
                         color="default"
                         name="radio-button-demo"
                         inputProps={{'aria-label': 'A'}}
                     />} label={"右边"}/>
+
+
                 </div>
             </FieldLabel>
         </div>
         <div>
             <FieldLabel title={"进退位"}>
                 <div>
+                    <FormControlLabel
+                        control={<Radio
+                            checked={levelUp === undefined}
+                            onChange={(event, checked) => {
+                                props.onChange({
+                                    ...props.value,
+                                    levelUp: undefined,
+                                })
+                            }}
+                            color="default"
+                            name="radio-button-demo"
+                            inputProps={{'aria-label': 'A'}}
+                        />}
+                        label={"随机"}
+                    />
+
                     <FormControlLabel
                         control={<Radio
                             checked={levelUp === true}
@@ -167,21 +173,7 @@ const StrategyView: FunctionComponent<Props> = (props) => {
                         label={"不进退位"}
                     />
 
-                    <FormControlLabel
-                        control={<Radio
-                            checked={levelUp === undefined}
-                            onChange={(event, checked) => {
-                                props.onChange({
-                                    ...props.value,
-                                    levelUp: undefined,
-                                })
-                            }}
-                            color="default"
-                            name="radio-button-demo"
-                            inputProps={{'aria-label': 'A'}}
-                        />}
-                        label={"随机"}
-                    />
+
 
                 </div>
             </FieldLabel>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.scss';
 import {range} from 'rxjs';
-import {map, toArray, bufferCount} from 'rxjs/operators'
+import {map, toArray, bufferCount, catchError} from 'rxjs/operators'
 import QuizView from "./app/QuizView";
 import StrategyView from "./strategy/StrategyView";
 import {Strategy} from "./strategy/Strategy";
@@ -22,7 +22,6 @@ function App() {
         space: 2,
         operator: "+",
         max: 100,
-        min: 10,
     };
     const [strategy, setStrategy] = useState(defSt);
 
@@ -34,7 +33,10 @@ function App() {
                 }),
                 bufferCount(7),
                 toArray(),
-                // windowCount(100),
+                catchError((err, caught) => {
+                    alert(err);
+                    return [];
+                })
             )
             .subscribe(value => {
                 setProblems(value);

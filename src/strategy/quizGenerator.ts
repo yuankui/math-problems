@@ -6,9 +6,10 @@ const randomInt = (max: number, min: number = 0) => {
 };
 
 export function generateQuiz(strategy: Strategy): Quiz {
-    while (true) {
-        let first = randomInt(strategy.max, strategy.min);
-        let second = randomInt(strategy.max, strategy.min);
+
+    for (let i = 0; i < 1000; i++) {
+        let first = randomInt(strategy.max, 1);
+        let second = randomInt(strategy.max, 1);
 
         // 检查最大值
         if (first + second > strategy.max) {
@@ -21,20 +22,24 @@ export function generateQuiz(strategy: Strategy): Quiz {
         }
 
         // 加减法
-        const operator: any = strategy.operator === 'random' ? ["+", "-"][randomInt(100) % 2] : strategy.operator;
+        const operator: any = strategy.operator === undefined ? ["+", "-"][randomInt(100) % 2] : strategy.operator;
         let row: any = [first, second, first + second];
         if (operator === '-') {
             const [a, b, c] = row;
             row = [c, b, a];
         }
 
-        row[strategy.space] = null;
+        let spacePosition = strategy.space === undefined ? randomInt(4) : strategy.space;
+
+        row[spacePosition] = null;
 
         return {
             num1: row[0],
             num2: row[1],
             num3: row[2],
             operator: operator,
-        }
+        };
     }
+
+    throw new Error("数值范围不对，生成失败");
 }

@@ -1,9 +1,8 @@
 export interface Strategy {
     max: number,
-    min: number,
 
-    operator: "+" | "-" | "random";
+    operator?: "+" | "-";
     levelUp?: boolean,
 
-    space: 0 | 1 | 2,
+    space?: 0 | 1 | 2,
 }
