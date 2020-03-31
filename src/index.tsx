@@ -8,7 +8,8 @@ import {applyMiddleware, compose, createStore} from "redux";
 import {Provider} from 'react-redux';
 import {commandMiddleware, enhanceCommandReducer} from "redux-commands";
 import {InitCommand} from "./redux/command/InitCommand";
-
+import {Router} from "react-router-dom";
+import {createHashHistory} from 'history';
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -17,13 +18,17 @@ const store = createStore(enhanceCommandReducer(rootReducer),
         commandMiddleware,
     )));
 
+const history = createHashHistory();
+
 const run = async () => {
     await store.dispatch(new InitCommand());
     ReactDOM.render(
         <React.StrictMode>
-            <Provider store={store}>
-                <App/>
-            </Provider>
+            <Router history={history}>
+                <Provider store={store}>
+                    <App/>
+                </Provider>
+            </Router>
         </React.StrictMode>,
         document.getElementById('root')
     );

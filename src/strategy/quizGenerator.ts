@@ -1,5 +1,5 @@
 import {Strategy} from "./Strategy";
-import {Quiz} from "../App";
+import {Quiz} from "../app/math1/MathApp";
 
 const randomInt = (max: number, min: number = 0) => {
     return parseInt(String(Math.random() * (max - min))) + min;

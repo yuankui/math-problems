@@ -1,37 +1,19 @@
-import React, {ReactNode, useCallback, useMemo, useState} from 'react';
+import React from 'react';
 import './App.scss';
-import {Button} from "@material-ui/core";
-import Section from "./app/Section";
-import {v4 as uuid} from 'uuid';
+import {Route, Switch, Redirect, useParams} from "react-router-dom";
+import MathApp from "./app/math1/MathApp";
 
-export interface Quiz {
-    num1?: number,
-    operator: string,
-    num2?: number,
-    num3?: number,
-}
 
 function App() {
-    const newSection = () => {
-        let id = uuid();
-        return <Section key={id}/>;
-    };
-
-    const [sections, setSections] = useState<Array<ReactNode>>([newSection()]);
-
-    const addSection = () => {
-        setSections([
-            ...sections,
-            newSection(),
-        ]);
-    };
-
-    return (
-        <div>
-            {sections}
-            <Button color={'primary'} onClick={addSection}>增加题目</Button>
-        </div>
-    );
+    console.log(useParams());
+    return <Switch>
+        <Route strict={true} path='/math1/:config?'>
+            <MathApp/>
+        </Route>
+        <Route>
+            <Redirect to="/math1/" />
+        </Route>
+    </Switch>
 }
 
 export default App;

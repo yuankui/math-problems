@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import {Quiz} from "../App";
+import {Quiz} from "./MathApp";
 
 interface Props {
     problems: Array<Quiz>,

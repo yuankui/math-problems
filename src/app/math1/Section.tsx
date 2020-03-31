@@ -1,31 +1,32 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {Strategy} from "../strategy/Strategy";
+import {Strategy} from "../../strategy/Strategy";
 import {range} from "rxjs";
 import {bufferCount, catchError, map, toArray} from "rxjs/operators";
-import {generateQuiz} from "../strategy/quizGenerator";
+import {generateQuiz} from "../../strategy/quizGenerator";
 import QuizView from "./QuizView";
-import StrategyView from "../strategy/StrategyView";
-import {Quiz} from "../App";
+import StrategyView from "../../strategy/StrategyView";
+import {Consumer} from "../../common";
+import {Quiz} from "./MathApp";
 
 interface Props {
+    strategy: Strategy,
+    onChange: Consumer<Strategy>,
 }
 
 const Section: FunctionComponent<Props> = (props) => {
-    const [strategy, setStrategy] = useState<Strategy>({
-        levelUp: true,
-        space: 2,
-        operator: "+",
-        max: 100,
-        quizLine: 10,
-    });
+
     const [problems, setProblems] = useState<Array<Array<Quiz>>>([]);
+
+    const updateStrategy = (strategy: Strategy) => {
+        props.onChange(strategy);
+    };
 
     const columns = 7;
     useEffect(() => {
-        range(0, strategy.quizLine * columns)
+        range(0, props.strategy.quizLine * columns)
             .pipe(
                 map(() => {
-                    return generateQuiz(strategy)
+                    return generateQuiz(props.strategy)
                 }),
                 bufferCount(7),
                 toArray(),
@@ -37,7 +38,7 @@ const Section: FunctionComponent<Props> = (props) => {
             .subscribe(value => {
                 setProblems(value);
             })
-    }, [strategy]);
+    }, [props.strategy]);
 
     const cube = problems.map((row,i) => {
         return <QuizView key={i} problems={row}/>
@@ -45,8 +46,8 @@ const Section: FunctionComponent<Props> = (props) => {
 
     return (
         <div className='quiz-section'>
-            <StrategyView value={strategy} onChange={value => {
-                setStrategy(value);
+            <StrategyView value={props.strategy} onChange={value => {
+                updateStrategy(value);
             }}/>
             {cube}
         </div>
